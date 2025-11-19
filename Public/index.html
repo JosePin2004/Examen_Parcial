@@ -1,12 +1,15 @@
 <!doctype html>
 <html lang="es">
-    <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compu-PC</title>
+    <!--icono pagina-->
     <link rel="icon" type="image/png" href="logo pagina.png">
     <link href="./output.css" rel="stylesheet" />
 </head>
+
 <body class="bg-slate-1000 min-h-screen">
     <!-- HEADER -->
     <header class="bg-slate-900 text-white px-6 py-10 flex items-center justify-between">
@@ -15,42 +18,60 @@
             <p class="text-sm text-slate-200">Un sitio para gamers</p>
         </div>
         <span class="text-xs text-slate-300">v1.0 · demo educativa</span>
-        <img 
-        src="logo tineda.png"  
-        alt="logo"
-        class="absolute left-1/2 -translate-x-1/2 h-auto w-80"
-    >
+        <img src="logo tineda.png" alt="logo" class="absolute left-1/2 -translate-x-1/2 h-auto w-80">
     </header>
     <!-- CONTENIDO -->
-  <main class="p-6 max-w-6xl mx-auto">
-            <!-- BARRA DE BÚSQUEDA / CONTROLES -->
-            <section class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-start">
-                <!-- Container del input y el botón de búsqueda -->
-                <div class="flex items-center gap-2 w-full md:max-w-md md:pl-0"> <!-- Cambié aquí -->
-                    <input id="input-busqueda" type="text" placeholder="Buscar videojuego..."
-                        class="w-full rounded-lg border border-slate-200 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-slate-400" />
-                    <button id="btn-buscar" class="px-1 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800">
-                        Buscar
-                    </button>
-                </div>
+    <main class="p-6 max-w-6xl mx-auto">
+        <!-- BARRA DE BÚSQUEDA / CONTROLES -->
+        <section class="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-start">
+            <!-- Container del input y el botón de búsqueda -->
+            <div class="flex items-center gap-2 w-full md:max-w-md md:pl-0"> <!-- Cambié aquí -->
+                <input id="input-busqueda" type="text" placeholder="Buscar videojuego..."
+                    class="w-full rounded-lg border border-slate-200 px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-slate-400" />
+                <button id="btn-buscar" class="px-1 py-2 bg-slate-900 text-white rounded-lg text-sm hover:bg-slate-800">
+                    Buscar
+                </button>
+            </div>
 
-                <!-- Contenedores para los selectores -->
-                <div class="flex gap-2">
-                    <select id="select-plataforma"
-                        class="rounded-lg border border-slate-200 px-1 py-2 text-black bg-white focus:outline-none focus:ring-2 focus:ring-slate-400">
-                        <option value="">Plataforma</option>
-                        <option value="pc">PC</option>
-                        <option value="ps5">PlayStation</option>
-                        <option value="xbox">Xbox</option>
-                        <option value="switch">Nintendo Switch</option>
-                    </select>
+            <!-- Contenedores para los selectores -->
+            <div class="flex gap-2">
+                <select id="select-plataforma"
+                    class="rounded-lg border border-slate-200 px-1 py-2 text-black bg-white focus:outline-none focus:ring-2 focus:ring-slate-400">
+                    <option value="">Plataforma</option>
+                    <option value="pc">PC</option>
+                    <option value="ps5">PlayStation</option>
+                    <option value="xbox">Xbox</option>
+                    <option value="switch">Nintendo Switch</option>
+                </select>
 
-                    <select id="select-ordenar"
-                        class="rounded-lg border border-slate-200 px-3 py-2 text-black bg-white focus:outline-none focus:ring-2 focus:ring-slate-400">
-                        <option value="">Ordenar por</option>
-                        <option value="rating">Mejor valorados</option>
-                        <option value="recent">Más recientes</option>
-                        <option value="name">Nombre</option>
-                    </select>
-                </div>
-            </section>
+                <select id="select-ordenar"
+                    class="rounded-lg border border-slate-200 px-3 py-2 text-black bg-white focus:outline-none focus:ring-2 focus:ring-slate-400">
+                    <option value="">Ordenar por</option>
+                    <option value="rating">Mejor valorados</option>
+                    <option value="recent">Más recientes</option>
+                    <option value="name">Nombre</option>
+                </select>
+            </div>
+        </section>
+       <!-- GRID DE VIDEOJUEGOS -->
+        <section>
+            <h2 class="text-lg font-semibold mb-4 text-white">Ofertas destacadas</h2>
+        
+            <!-- ESTADO DE CARGA -->
+            <p id="estado-de-carga" class="text-sm text-slate-500 mb-3 hidden">Cargando videojuegos...</p>
+
+            <!-- ESTADO DE ERROR -->
+            <p id="mensaje-de-error" class="text-sm text-red-500 mb-3 hidden">No se encontraron videojuegos.</p>
+
+            <div 
+
+            id="grid-videogames" 
+            class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <!-- Aquí se insertarán las tarjetas de videojuegos dinámicamente -->
+
+            </div>
+        </section>
+    </main>
+</body>
+  <script src="scrip.js"></script>
+</html>
