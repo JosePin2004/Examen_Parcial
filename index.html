@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Registro de Estudiantes - Examen Parcial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Registro de Estudiantes</h1>
+            <p class="subtitle">Examen Primer Parcial - Aplicaciones Web</p>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Registro de Estudiante</h2>
+                <form id="studentForm">
+                    <div class="form-group">
+                        <label for="studentName">Nombre Completo:</label>
+                        <input type="text" id="studentName" name="studentName" required>
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentId">Código de Estudiante:</label>
+                        <input type="text" id="studentId" name="studentId" required>
+                        <span class="error-message" id="idError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentEmail">Correo Electrónico:</label>
+                        <input type="email" id="studentEmail" name="studentEmail" required>
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentCareer">Carrera:</label>
+                        <select id="studentCareer" name="studentCareer" required>
+                            <option value="">Seleccione una carrera</option>
+                            <option value="ingenieria-sistemas">Ingeniería de Sistemas</option>
+                            <option value="ingenieria-software">Ingeniería de Software</option>
+                            <option value="ciencias-computacion">Ciencias de la Computación</option>
+                            <option value="desarrollo-web">Desarrollo Web</option>
+                        </select>
+                        <span class="error-message" id="careerError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studentSemester">Semestre:</label>
+                        <input type="number" id="studentSemester" name="studentSemester" min="1" max="10" required>
+                        <span class="error-message" id="semesterError"></span>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Registrar Estudiante</button>
+                        <button type="button" class="btn btn-secondary" id="clearBtn">Limpiar Formulario</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="display-section">
+                <h2>Estudiantes Registrados</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre o código...">
+                </div>
+                <div class="stats">
+                    <span>Total de estudiantes: <strong id="totalStudents">0</strong></span>
+                </div>
+                <div id="studentList" class="student-list">
+                    <p class="no-data">No hay estudiantes registrados.</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Sistema de Registro - Examen Primer Parcial</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
