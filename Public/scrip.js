@@ -76,6 +76,67 @@ function renderizarVideojuegos(lista) {
         grid.appendChild(card);
     });
 }
+//Función para filtrar por búsqueda y plataforma//
+function aplicarFiltros() {
+    const termino = inputBusqueda.value.toLowerCase(); // Obtiene el término de búsqueda en minúsculas
+    const plataforma = selectPlataforma.value; // Obtiene la plataforma seleccionada
+    
+    // Filtra juegos que coincidan con el término de búsqueda
+    let resultados = juegosEnCache.filter(juego => {
+        const titulo = (juego.title || juego.external || "").toLowerCase();
+        const cumpleBusqueda = titulo.includes(termino) || termino === ""; // Si está vacío, acepta todos
+        return cumpleBusqueda;
+    });
+    
+    // Aplica ordenamiento según la opción seleccionada
+    const ordenar = selectOrdenar.value;
+    if (ordenar === "rating") {
+        // Ordena de mayor a menor puntuación (Metacritic)
+        resultados.sort((a, b) => (b.metacriticScore || 0) - (a.metacriticScore || 0));
+    } else if (ordenar === "recent") {
+        // Ordena por fecha de lanzamiento (más recientes primero)
+        resultados.sort((a, b) => (b.steamReleaseDate || 0) - (a.steamReleaseDate || 0));
+    } else if (ordenar === "name") {
+        // Ordena alfabéticamente por nombre
+        resultados.sort((a, b) => (a.title || a.external || "").localeCompare(b.title || b.external || ""));
+    }
+    
+    juegosActuales = resultados; // Guarda los resultados filtrados
+    return resultados;
+}
+
+
+//Función para abrir ventana con detalles//
+function abrirModal(juego) {
+    // Extrae la información del juego con valores por defecto
+    const titulo = juego.title || juego.external || "Juego";
+    const thumb = juego.thumb || juego.thumbnail || "";
+    const normal = juego.normalPrice ?? "-";
+    const oferta = juego.salePrice ?? juego.cheapest ?? "-";
+    const ahorro = juego.savings ? Math.round(juego.savings) : "-";
+    
+    // Rellena la ventana con la información del juego
+    document.querySelector('#modal-titulo').textContent = titulo; // Título del juego
+    document.querySelector('#modal-imagen').src = thumb; // Imagen del juego
+    document.querySelector('#modal-imagen').alt = titulo;
+    document.querySelector('#modal-precio-normal').textContent = normal !== "-" ? `$${normal}` : "No disponible";
+    document.querySelector('#modal-precio-oferta').textContent = oferta !== "-" ? `$${oferta}` : "No disponible";
+    document.querySelector('#modal-ahorro').textContent = ahorro !== "-" ? `${ahorro}%` : "No disponible";
+    
+    // Construye el enlace a la tienda 
+    let enlaceURL = `https://www.cheapshark.com/search?q=${encodeURIComponent(titulo)}`;
+    
+    document.querySelector('#modal-enlace-tienda').href = enlaceURL;
+    
+    // Muestra el modal eliminando la clase "hidden"
+    modalDetalles.classList.remove('hidden');
+}
+
+
+//Función para cerrar ventana//
+function cerrarModal() {
+    modalDetalles.classList.add('hidden');
+}
 // CARGAR VIDEOJUEGOS INICIALES
 async function cargarVideojuegosInicial() {
     estadoCarga.classList.remove("hidden"); // Muestra "Cargando..."
