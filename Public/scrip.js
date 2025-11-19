@@ -108,4 +108,111 @@ async function cargarVideojuegosInicial() {
     }
 }
 
+// BÚSQUEDA
+function ejecutarBusqueda() {
+    estadoCarga.classList.remove("hidden");
+    grid.innerHTML = ''; // Limpia los resultados previos
+    
+    // Aplica los filtros (búsqueda + ordenamiento)
+    const resultados = aplicarFiltros();
+    
+    // Verifica si hay resultados
+    if (resultados.length === 0) {
+        mensajeError.textContent = "No se encontraron videojuegos con ese criterio.";
+        mensajeError.classList.remove('hidden');
+    } else {
+        mensajeError.classList.add('hidden');
+        // Renderiza los juegos encontrados
+        renderizarVideojuegos(resultados);
+    }
+    
+    estadoCarga.classList.add('hidden');
+}
+
+
+
+//Cargar más juegos//
+async function cargarMasJuegos() {
+    estadoCarga.classList.remove("hidden");
+    mensajeError.classList.add("hidden");
+    btnVerMas.disabled = true; // Desactiva el botón mientras carga
+    
+    try {
+        // Solicita la siguiente página de juegos
+        const url = `https://www.cheapshark.com/api/1.0/deals?storeID=1&pageSize=${juegosPorPagina}&pageNumber=${paginaActual}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+            throw new Error("Error en la Respuesta de la API");
+        }
+        const data = await res.json();
+        
+        // Verifica si la página está vacía (fin de resultados)
+        if (data.length === 0) {
+            mensajeError.textContent = "No hay más juegos disponibles";
+            mensajeError.classList.remove('hidden');
+            btnVerMas.disabled = false;
+            return;
+        }
+        
+        // Renderiza los nuevos juegos (se agregan al grid existente)
+        renderizarVideojuegos(data);
+        paginaActual++; // Incrementa el contador de página
+        btnVerMas.disabled = false; // Reactiva el botón
+    }
+    catch (e) {
+        console.error("Error al cargar más juegos", e);
+        mensajeError.classList.remove('hidden');
+        btnVerMas.disabled = false;
+    }
+    finally {
+        estadoCarga.classList.add('hidden');
+    }
+}
+
+//Filtros de búsqueda//
+
+// Botón "Ver más" - Carga mas juegos
+if (btnVerMas) {
+    btnVerMas.addEventListener('click', cargarMasJuegos);
+}
+
+// Botón "Buscar" - Da inicio a la búsqueda
+if (btnBuscar) {
+    btnBuscar.addEventListener('click', ejecutarBusqueda);
+}
+
+// Input de búsqueda - Busca al presionar Enter
+if (inputBusqueda) {
+    inputBusqueda.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            ejecutarBusqueda();
+        }
+    });
+}
+
+// filtro de plataforma - Aplica filtros al cambiar
+if (selectPlataforma) {
+    selectPlataforma.addEventListener('change', ejecutarBusqueda);
+}
+
+// filtro de orden - Aplica el orden seleccionado
+if (selectOrdenar) {
+    selectOrdenar.addEventListener('change', ejecutarBusqueda);
+}
+
+// Botón cerrar ventana de detalles (X) - Cierra la ventana de detalles
+if (btnCerrarModal) {
+    btnCerrarModal.addEventListener('click', cerrarModal);
+}
+
+// Cierra la ventana de detalles al hacer clic fuera de ella 
+if (modalDetalles) {
+    modalDetalles.addEventListener('click', (e) => {
+        if (e.target === modalDetalles) {
+            cerrarModal();
+        }
+    });
+}
+
+// Carga los videojuegos iniciales 
 cargarVideojuegosInicial();
